@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
+      const response = await axios.post("http://localhost:8000/api/auth/login", {
         email,
         password,
       });
       setMessage(response.data.message);
+      navigate("/main");
     } catch (error) {
       setMessage(error.response?.data?.error || "Login failed");
     }
